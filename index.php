@@ -10,8 +10,11 @@ require_once('/classes/controller.php');
 
 $test = db::query('SELECT * FROM `settings`')->fetchAll(PDO::FETCH_ASSOC);
 
-
+$concept = QRcode::png('PHP QR Code :)');
 $content = <<<CONTENT
+<section>
+	Proof of concept! {$concept}
+</section>
 <section>
 	<div class="container-fluid header">
 		<div class="row">

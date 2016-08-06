@@ -21,7 +21,8 @@ class controller
 		require_once('settings.php');
 		require_once('structure.php');
 		require_once('handlers.php');
-		require_once('classes/user.php');
+		require_once('admin/classes/user.php');
+		require_once('libs/phpqrcode/qrlib.php');
 	}
 	
 	

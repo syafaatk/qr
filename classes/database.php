@@ -5,7 +5,7 @@
 * Author: Benjamin Faulkner
 *********************************************************************/
 class db {
-    const   DB_NAME     = 'intrepid';
+    const   DB_NAME     = 'qr';
     const   DB_USERNAME = 'root';
     const   DB_PASSWORD = '';
     
