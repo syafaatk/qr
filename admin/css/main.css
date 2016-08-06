@@ -1,0 +1,54 @@
+/*********************************************************************
+* Part of intrepid, this is not to be considered a production system
+* Development started Dec 2015
+* Author: Benjamin Faulkner
+*********************************************************************//* 
+    Created on : 26-Dec-2015, 17:32:15
+    Author     : Ben
+*/
+
+.main {
+    padding-top: 0px;
+}
+
+.sidebar {
+    background: #3f3f3f none repeat scroll 0 0;
+    border-right: 3px solid #428bca;
+}
+
+.sidebar .nav a {
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 90%;
+}
+
+.sidebar .nav a:hover {
+    color: #428bca;
+    background: #5B5B5B;
+}
+
+.sidebar .nav .submenu li a{
+    font-size: 80%;
+    padding: 5px 5px 5px 30px;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    background: #f8f8f8;
+    border: 1px solid #e4e3e3;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 5px 5px 5px 10px;
+}
+
+.table-auto {
+    table-layout: auto;
+}
+
+.link-row {
+    cursor: pointer;
+}
+
+.link-row td {
+    padding: 10px 10px !important;
+}
