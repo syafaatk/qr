@@ -10,15 +10,26 @@ require_once('../classes/controller.php');
 
 
 
+
 if(isset($_POST['username']))
 {
 	require_once('classes/security.php');
 	if(security::checkCredentials($_POST['username'], $_POST['password'])) {
 		security::loginUser($_POST['username'], $_POST['password']);
 		
+		$location = (!isset($_SESSION['referer']) || strpos($_SESSION['referer'],'login.php') !== false) ? 'index.php' : $_SESSION['referer'];
+		
+		unset($_SESSION['referer']);
 		handlers::setSuccess('Logged in successfully.');
-		header('Location: index.php');
+		header('Location: ' . $location);
 	}
+}
+else {
+	if(session_status() != PHP_SESSION_ACTIVE)
+			session_start();
+	
+	if(!isset($_SESSION['referer']) && isset($_SERVER['HTTP_REFERER']))
+		$_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
 }
 
 $content = <<<CONTENT

@@ -27,7 +27,7 @@ class security {
 	public static function checkCredentials($username, $password) {
 		// Get our username and ID from the database (note we are not getting password at this point), I think this may be a redundant step.
 		$count = db::query("SELECT `username`, `id` FROM `users` WHERE `username` = :username", array('username' => $username))->fetch(PDO::FETCH_ASSOC);
-		
+
 		// If no user, we return false.
 		if(empty($count))
 		{
@@ -38,7 +38,7 @@ class security {
 		
 		// Create our user variable.
 		$user = new user($count['id']);
-		$user = $user->getUser();
+		//$user = $user->getUser();
 		
 		// Check our user isn't blocked
 		if($user->failed > 5)
@@ -46,7 +46,7 @@ class security {
 			handlers::setError('Sorry the user account you are trying to access has been blocked due to multiple failed logins.');
 			return false;
 		}
-		
+
 		// Use our variable to check the password and salt.
 		if(hash('sha512', $password . $user->salt) !== $user->password)
 		{
@@ -74,6 +74,7 @@ class security {
 		db::query("DELETE FROM `user_sessions` WHERE `time` < (NOW() - INTERVAL ".settings::getValue('session_timeout_age')." MINUTE)")->fetch(PDO::FETCH_ASSOC);
 		
 		$params = array('session_id' => session_id(), 'salt' => $_SESSION['INT_USER']['salt']);
+		
 		$count	= db::query("SELECT `id`, `salt`, `user` FROM `user_sessions` WHERE `id` = :session_id AND `salt` = :salt", $params)->fetch(PDO::FETCH_ASSOC);
 		
 		if(empty($count) || $count == null) {
@@ -81,6 +82,7 @@ class security {
 			return false;
 		}
 		else {
+			
 			$params = array('session_id' => session_id(), 'time' => date("Y-m-d H:i:s"));
 			db::query("UPDATE `user_sessions` SET `time`=:time WHERE `id` =:session_id", $params)->fetch(PDO::FETCH_ASSOC);
 			return true;

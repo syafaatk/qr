@@ -26,8 +26,11 @@ class AdminStructure extends structure
 		$base			= settings::getValue('site-base');
 		$description	= settings::getValue('meta-description');
 		
-		$this->addCSSFile('css/dashboard.css');
-		$this->addCSSFile('css/main.css');
+		if(!in_array('css/dashboard.css', $this->cssFiles))
+			$this->addCSSFile('css/dashboard.css');
+		
+		if(!in_array('css/main.css', $this->cssFiles))
+			$this->addCSSFile('css/main.css');
 		
 		$javascript		= $this->buildJavascript();
 		$css			= $this->buildCSS();
@@ -79,19 +82,12 @@ HTML;
 					<div class="col-sm-3 col-md-2 sidebar">
 						<ul class="nav nav-sidebar">
 							<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-							<li><a href="blogs.php">Blogs</a>
+							<li><a href="items.php">Items</a>
 								<ul class="nav submenu">
-									<li><a href="view-blogs.php">View Blogs</a></li>
-									<li><a href="blogs.php">Add Blog</a></li>
+									<li><a href="view-items.php">View Items</a></li>
+									<li><a href="items.php">Add Item</a></li>
 								</ul>
 							</li>
-							<li><a href="pages.php">Pages</a></li>
-								<ul class="nav submenu">
-									<li><a href="view-pages.php">View Pages</a></li>
-									<li><a href="pages.php">Add Page</a></li>
-								</ul>
-							<li><a href="#">Comments</a></li>
-							<li><a href="#">Contacts</a></li>
 							<li><a href="view-settings.php">Settings</a></li>
 							<hr/>
 							<li><a href="{$sitebase}">View Site</a></li>

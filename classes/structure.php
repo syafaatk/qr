@@ -143,8 +143,10 @@ JSINLINE;
 	{
 		$html = '';
 		
+	
 		// We always want our main css files
-		$this->addCSSFile('css/main.css');
+		if(!in_array('css/main.css', $this->cssFiles))
+			$this->addCSSFile('css/main.css');
 		
 		// Foreach javascript file add it in as "script"
 		if(!empty($this->cssFiles))
@@ -243,10 +245,13 @@ CSSINLINE;
 		if($this->bootstrap == false)
 			return false;
 		
-		
 		$this->addJSFile('js/bootstrap.min.js');
-		$this->addCSSFile('css/bootstrap.min.css');
-		$this->addCSSFile('css/bootstrap-theme.css');
+		if(!in_array('css/bootstrap.min.css', $this->cssFiles))
+			$this->addCSSFile('css/bootstrap.min.css');
+		
+		if(!in_array('css/bootstrap-theme.css', $this->cssFiles))
+			$this->addCSSFile('css/bootstrap-theme.css');
+		
 		$this->addCSSFile('https://fonts.googleapis.com/css?family=Open+Sans:400,800');
 		$this->addCSSFile('https://fonts.googleapis.com/css?family=Lobster');
 		
@@ -305,13 +310,20 @@ HTML;
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">Intrepid</a>
+						<a class="navbar-brand" href="#">Inventory</a>
 					</div>
-					<div id="navbar" class="nav navbar-nav navbar-right navbar-collapsed">
+					<div id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse">
+						<div class="input-group">
+							<form class="navbar-form navbar-left">
+								<div class="form-group">
+								  <input type="text" class="form-control" placeholder="Search">
+								</div>
+								<button type="submit" class="btn btn-default">Submit</button>
+							</form>
+						</div>
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">Home</a></li>
-							<li><a href="#about">About</a></li>
-							<li><a href="#contact">Contact</a></li>
+							<li class="active"><a href="#">Items</a></li>
+							<li><a href="#about">Admin</a></li>
 						</ul>
 					</div><!--/.nav-collapse -->
 				</div>

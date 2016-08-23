@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule  ^([0-9]+)$ item.php?id=$1
+RewriteRule  print/([0-9]+)$ print.php?id=$1

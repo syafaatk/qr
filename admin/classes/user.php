@@ -21,8 +21,15 @@ class user {
 	 */
 	public function __construct($id=false) {
 		if($id) {
-			$this->user = db::query('SELECT * FROM `users` WHERE id=:id', array('id' => $id))->fetchObject();
-			return $this->user;
+			$this->user = db::query('SELECT * FROM `users` WHERE id=:id', array('id' => $id))->fetch(PDO::FETCH_OBJ);
+			
+			foreach($this->user as $key => $value) {
+				$this->$key = $value;
+			}
+			
+			unset($this->user);
+			
+			return $this;
 		}
 	}
 	
@@ -33,13 +40,13 @@ class user {
 	 * @return user object
 	 */
 	public function getUser() {
-		return $this->user;
+		return $this;
 	}
 	
 	
 	
 	public function incrementBlock() {
-		db::query('UPDATE `users` SET `failed`=`failed`+1 WHERE id=:id', array('id' => $this->user->id))->fetchAll();
+		db::query('UPDATE `users` SET `failed`=`failed`+1 WHERE id=:id', array('id' => $this->id))->fetchAll();
 	}
 	
 	

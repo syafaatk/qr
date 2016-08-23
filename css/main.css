@@ -89,3 +89,10 @@ box-shadow: inset 0px -3px 5px -1px rgba(0,0,0,0.2);
     text-shadow: 3px 3px 4px #6B732A;
 }
 
+.link-row {
+    cursor: pointer;
+}
+
+.link-row td {
+    padding: 10px 10px !important;
+}

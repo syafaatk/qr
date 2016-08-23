@@ -7,7 +7,7 @@
 *********************************************************************/
 
 require_once('../classes/controller.php');
-require_once('classes/pages.php');
+require_once('classes/items.php');
 controller::setAdmin(true);
 
 $start = (isset($_GET['p']) && $_GET['p'] > 1) ? (($_GET['p'] -1) * settings::getValue('admin_default_per_page')) : 0;
@@ -16,15 +16,15 @@ $start = (isset($_GET['p']) && $_GET['p'] > 1) ? (($_GET['p'] -1) * settings::ge
 
 if(isset($_POST['title'])) {
 	
-	$blog->title	= $_POST['title'];
-	$blog->content	= $_POST['content'];
-	$blog->save();
+	$item->title	= $_POST['title'];
+	$item->content	= $_POST['content'];
+	$item->save();
 	$loadMe = (db::lastInserted() == 0) ? $_POST['id'] : db::lastInserted();
-	$blog = new blogs($loadMe);
+	$item = new items($loadMe);
 }
 
 require_once('classes/pagination.php');
-$pagination = new pagination("SELECT * FROM `pages`", array(), $start);
+$pagination = new pagination("SELECT * FROM `items` ORDER by `date` DESC, `id` DESC", array(), $start);
 
 
 $tablerows = '';
@@ -34,7 +34,7 @@ foreach($pagination->data as $data)
 	$desc = (strlen($data->content) > 50) ? substr(strip_tags($data->content), '50') . '...' : strip_tags($data->content);
 	$date = date('d-m-Y', strtotime($data->date));
 	$tablerows .= <<<TABLEROW
-		<tr class="link-row" data-link="pages.php?id={$data->id}">
+		<tr class="link-row" data-link="items.php?id={$data->id}">
 			<td>{$data->id}</td>
 			<td>{$data->title}</td>
 			<td>{$desc}</td>
@@ -52,7 +52,7 @@ $content = <<<CONTENT
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 main-content">
-				<h4>Pages</h4>
+				<h4>Items</h4>
 				
 				<table class="table table-hover table-auto">
 					<thead>
@@ -67,8 +67,8 @@ $content = <<<CONTENT
 				</table>
 				<div class="text-center">
 					<ui class="pagination">
-						<li{$disabled['prev']}><a href="view-blogs.php?p={$pagination->prevPage}">Prev</a></li>
-						<li{$disabled['next']}><a href="view-blogs.php?p={$pagination->nextPage}">Next</a></li>
+						<li{$disabled['prev']}><a href="view-items.php?p={$pagination->prevPage}">Prev</a></li>
+						<li{$disabled['next']}><a href="view-items.php?p={$pagination->nextPage}">Next</a></li>
 					</ul>
 				</div>
 			</div>
