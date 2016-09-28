@@ -17,30 +17,32 @@ $pathRel = '../'.$path;
 //var_dump($path);die();
 
 
+$small = (isset($_GET['small'])) ? ' small' : '';
+
 if(!$item->hackable) {
 	$concept = QRcode::png("http://".$_SERVER['HTTP_HOST']."/qr/admin/items.php?id=".$_REQUEST['id'], $pathRel, QR_ECLEVEL_L, 5);
 	$content = <<<CONTENT
-		<div class="col-md-2 col-xs-4">
+		<div class="col-md-2 col-xs-4{$small}">
 				<img src="http://{$_SERVER['HTTP_HOST']}/qr/{$path}"/>
 		</div>
-		<div class="col-md-10 col-xs-8">
+		<div class="col-md-10 col-xs-8{$small}">
 			<h1 class="hackable-note">do not hack!</h1>
 			<h2 class="hackable-sub">{$item->title}</h2>
-			<p>http://{$_SERVER['HTTP_HOST']}/qr/admin/items.php?id={$_REQUEST['id']}</p>
+			<p>http://{$_SERVER['HTTP_HOST']}/qr/item/{$_REQUEST['id']}</p>
 		</div>	
 CONTENT;
 }
 else {
 	$concept = QRcode::png("http://".$_SERVER['HTTP_HOST']."/qr/admin/items.php?id=".$_REQUEST['id'], $pathRel);
 	$content = <<<CONTENT
-		<div class="col-md-1 col-xs-2">
+		<div class="col-md-1 col-xs-2{$small}">
 			<div class="row">
 				<img src="http://{$_SERVER['HTTP_HOST']}/qr/{$path}"/>
 			</div>
 		</div>
-		<div class="col-md-11 col-xs-10">
+		<div class="col-md-11 col-xs-10{$small}">
 			<h2>{$item->title}</h2>
-			<p>http://{$_SERVER['HTTP_HOST']}/qr/admin/items.php?id={$_REQUEST['id']}</p>
+			<p>http://{$_SERVER['HTTP_HOST']}/qr/{$_REQUEST['id']}</p>
 		</div>	
 CONTENT;
 }
@@ -68,8 +70,8 @@ $p = AdminStructure::getInstance(true);
 $p->setBootstrap(true);
 $p->addJSFile('../js/ckeditor/ckeditor.js');
 
-$p->addCSSFIle('css/dashboard.css');
-$p->addCSSFIle('css/main.css');
-$p->addCSSFIle('css/print.css');
+$p->addCSSFIle('admin/css/dashboard.css');
+$p->addCSSFIle('admin/css/main.css');
+$p->addCSSFIle('admin/css/print.css');
 $p->addContent($content);
 $p->printPage();

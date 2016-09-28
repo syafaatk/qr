@@ -27,7 +27,7 @@ if(isset($_POST['title'])) {
 
 $hackable = ($item->hackable) ? ' checked' : '';
 
-$printButton = (isset($_REQUEST['id'])) ? '<a href="print.php?id='.$item->id.'" target="_new" class="btn btn-default pull-right">Print Label</a>' : '';
+$printButton = (isset($_REQUEST['id'])) ? '<a href="admin/print.php?id='.$item->id.'" target="_new" class="btn btn-default pull-right">Print Label</a>' : '';
 
 $content = <<<CONTENT
 <section>
@@ -36,7 +36,7 @@ $content = <<<CONTENT
 			<div class="col-md-12 main-content">
 				<h4>Items</h4>
 				
-				<form action="items.php" method="POST">
+				<form action="admin/items.php" method="POST">
 					<input type="hidden" name="id" value="{$item->id}"/>
 					<fieldset class="form-group">
 						<input type="text" name="title" class="form-control" placeholder="Title" value="{$item->title}" />
@@ -99,6 +99,6 @@ CONTENT;
 
 $p = AdminStructure::getInstance(true);
 $p->setBootstrap(true);
-$p->addJSFile('../js/ckeditor/ckeditor.js');
+$p->addJSFile('js/ckeditor/ckeditor.js');
 $p->addContent($content);
 $p->printPage();

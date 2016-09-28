@@ -42,19 +42,39 @@ h2 {
     }
     
     
-h1.hackable-note {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 3em;
-    margin: 10px 0px 0px -5px;
-}
+    h1.hackable-note {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 3em;
+        margin: 10px 0px 0px -5px;
+    }
 
-h2.hackable-sub {
-    font-size: 1.5em;
-}
+    h2.hackable-sub {
+        font-size: 1.5em;
+    }
 
-    
+
     h2 {
         margin-top: 15px;
+    }
+    
+
+    
+    .small h2.hackable-sub {
+        font-size: 1em;
+    }
+    
+    .small h1.hackable-note {
+        font-size: 1.5em;
+        margin: 5px 0px 0px -5px;
+    }
+    
+    .small h2 {
+        margin: 5px 0px 0px -5px;
+        font-size: 1.5em;
+    }
+    
+    .small p {
+        margin: 0px 0px 0px -5px;
     }
 }

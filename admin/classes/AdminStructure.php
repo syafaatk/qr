@@ -26,11 +26,11 @@ class AdminStructure extends structure
 		$base			= settings::getValue('site-base');
 		$description	= settings::getValue('meta-description');
 		
-		if(!in_array('css/dashboard.css', $this->cssFiles))
-			$this->addCSSFile('css/dashboard.css');
+		if(!in_array('admin/css/dashboard.css', $this->cssFiles))
+			$this->addCSSFile('admin/css/dashboard.css');
 		
-		if(!in_array('css/main.css', $this->cssFiles))
-			$this->addCSSFile('css/main.css');
+		if(!in_array('admin/css/main.css', $this->cssFiles))
+			$this->addCSSFile('admin/css/main.css');
 		
 		$javascript		= $this->buildJavascript();
 		$css			= $this->buildCSS();
@@ -46,13 +46,13 @@ class AdminStructure extends structure
 						<meta name="viewport" content="width=device-width, initial-scale=1">
 						<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 						<title>{$title} - Admin</title>
-						<base href="{$base}admin/"/>
+						<base href="{$base}"/>
 						<meta name=”description” content=”{$description}”>
 
 						<!-- Bootstrap core CSS -->
-						<link href="../css/bootstrap.min.css" rel="stylesheet">
+						<link href="css/bootstrap.min.css" rel="stylesheet">
 						<!-- Custom styles for this template -->
-						<link href="css/dashboard.css" rel="stylesheet">
+						<link href="admin/css/dashboard.css" rel="stylesheet">
 
 						<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 						<!--[if lt IE 9]>
@@ -81,14 +81,14 @@ HTML;
 				<div class="row">
 					<div class="col-sm-3 col-md-2 sidebar">
 						<ul class="nav nav-sidebar">
-							<li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-							<li><a href="items.php">Items</a>
+							<li class="active"><a href="admin/#">Overview <span class="sr-only">(current)</span></a></li>
+							<li><a href="admin/items.php">Items</a>
 								<ul class="nav submenu">
-									<li><a href="view-items.php">View Items</a></li>
-									<li><a href="items.php">Add Item</a></li>
+									<li><a href="admin/view-items.php">View Items</a></li>
+									<li><a href="admin/items.php">Add Item</a></li>
 								</ul>
 							</li>
-							<li><a href="view-settings.php">Settings</a></li>
+							<li><a href="admin/view-settings.php">Settings</a></li>
 							<hr/>
 							<li><a href="{$sitebase}">View Site</a></li>
 							<li><a href="#">Logout</a></li>
@@ -96,7 +96,7 @@ HTML;
 		
 					</div>
 		
-					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
 SIDEBAR;
 		
 		return $html;

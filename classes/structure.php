@@ -145,7 +145,7 @@ JSINLINE;
 		
 	
 		// We always want our main css files
-		if(!in_array('css/main.css', $this->cssFiles))
+		if(!in_array('css/main.css', $this->cssFiles) && !self::$admin)
 			$this->addCSSFile('css/main.css');
 		
 		// Foreach javascript file add it in as "script"
@@ -246,6 +246,7 @@ CSSINLINE;
 			return false;
 		
 		$this->addJSFile('js/bootstrap.min.js');
+		
 		if(!in_array('css/bootstrap.min.css', $this->cssFiles))
 			$this->addCSSFile('css/bootstrap.min.css');
 		
@@ -312,18 +313,20 @@ HTML;
 						</button>
 						<a class="navbar-brand" href="#">Inventory</a>
 					</div>
-					<div id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse">
-						<div class="input-group">
-							<form class="navbar-form navbar-left">
-								<div class="form-group">
-								  <input type="text" class="form-control" placeholder="Search">
+					<div id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse" style="box-shadow: none;">
+						
+							<form class="navbar-form navbar-left" action="./search/" method="GET">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search for..." name="search" style="height: 33px;">
+									<span class="input-group-btn ">
+										<button class="btn btn-default" type="button">Go!</button>
+									</span>
 								</div>
-								<button type="submit" class="btn btn-default">Submit</button>
 							</form>
-						</div>
+						
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">Items</a></li>
-							<li><a href="#about">Admin</a></li>
+							<li class="active"><a href="./">Items</a></li>
+							<li><a href="./admin/">Admin</a></li>
 						</ul>
 					</div><!--/.nav-collapse -->
 				</div>

@@ -34,7 +34,7 @@ foreach($pagination->data as $data)
 	$desc = (strlen($data->content) > 50) ? substr(strip_tags($data->content), '50') . '...' : strip_tags($data->content);
 	$date = date('d-m-Y', strtotime($data->date));
 	$tablerows .= <<<TABLEROW
-		<tr class="link-row" data-link="items.php?id={$data->id}">
+		<tr class="link-row" data-link="admin/items.php?id={$data->id}">
 			<td>{$data->id}</td>
 			<td>{$data->title}</td>
 			<td>{$desc}</td>
@@ -67,8 +67,8 @@ $content = <<<CONTENT
 				</table>
 				<div class="text-center">
 					<ui class="pagination">
-						<li{$disabled['prev']}><a href="view-items.php?p={$pagination->prevPage}">Prev</a></li>
-						<li{$disabled['next']}><a href="view-items.php?p={$pagination->nextPage}">Next</a></li>
+						<li{$disabled['prev']}><a href="admin/view-items.php?p={$pagination->prevPage}">Prev</a></li>
+						<li{$disabled['next']}><a href="admin/view-items.php?p={$pagination->nextPage}">Next</a></li>
 					</ul>
 				</div>
 			</div>
@@ -84,8 +84,8 @@ CONTENT;
 
 $p = AdminStructure::getInstance(true);
 $p->setBootstrap(true);
-$p->addJSFile('../js/ckeditor/ckeditor.js');
-$p->addJSFile('js/admin.js');
+$p->addJSFile('js/ckeditor/ckeditor.js');
+$p->addJSFile('admin/js/admin.js');
 
 $p->addContent($content);
 $p->printPage();

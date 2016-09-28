@@ -41,7 +41,7 @@ class security {
 		//$user = $user->getUser();
 		
 		// Check our user isn't blocked
-		if($user->failed > 5)
+		if($user->failed > (int) settings::getValue('failed_login_attempts') && (int) settings::getValue('failed_login_attempts') != 0)
 		{
 			handlers::setError('Sorry the user account you are trying to access has been blocked due to multiple failed logins.');
 			return false;

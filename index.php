@@ -23,7 +23,19 @@ if(isset($_POST['title'])) {
 }
 
 require_once('admin/classes/pagination.php');
-$pagination = new pagination("SELECT * FROM `items` ORDER by `date` DESC, `id` DESC", array(), $start);
+
+$search       = (isset($_GET['search'])) ? $_GET['search'] : '';
+$searchString = (isset($_GET['search'])) ? '%' . $_GET['search'] . '%' : '';
+if($search == '') {
+	$query  = "SELECT * FROM `items` ORDER by `date` DESC, `id` DESC";
+	$params = array();
+}
+else {
+	$query  = "SELECT * FROM `items` WHERE `content` LIKE :search OR `title` LIKE :search ORDER by `date` DESC, `id` DESC";
+	$params = array('search' => $searchString);
+}
+
+$pagination = new pagination($query, $params, $start);
 
 
 $tablerows = '';
@@ -66,8 +78,8 @@ $content = <<<CONTENT
 				</table>
 				<div class="text-center">
 					<ui class="pagination">
-						<li{$disabled['prev']}><a href="index.php?p={$pagination->prevPage}">Prev</a></li>
-						<li{$disabled['next']}><a href="index.php?p={$pagination->nextPage}">Next</a></li>
+						<li{$disabled['prev']}><a href="search.php?search={$search}&p={$pagination->prevPage}">Prev</a></li>
+						<li{$disabled['next']}><a href="search.php?search={$search}&p={$pagination->nextPage}">Next</a></li>
 					</ul>
 				</div>
 			</div>
