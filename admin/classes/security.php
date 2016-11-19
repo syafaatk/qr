@@ -121,4 +121,35 @@ class security {
 	
 		return true;
 	}
+	
+	
+	
+
+	/**
+	 * creates a new user login.
+	 * @param type $username
+	 * @param type $password
+	 * @return boolean
+	 */
+	public static function createLogin($username, $password) {
+		// Get our username and ID from the database (note we are not getting password at this point), I think this may be a redundant step.
+		$count = db::query("SELECT `username`, `id` FROM `users` WHERE `username` = :username", array('username' => $username))->fetch(PDO::FETCH_ASSOC);
+
+		// If no user, we return false.
+		if(!empty($count))
+		{
+			handlers::setError('Username already exists!');	
+			return false;
+		}
+		
+		
+		// Hash our password
+		$salt     = substr(uniqid('', true), -4);
+		$password = hash('sha512', $password . $salt);
+		// Create the username/password
+		db::query("INSERT INTO `users` (`username`, `password`, `salt`) VALUES (:username, :password, :salt)", array('username' => $username, 'password' => $password, 'salt' => $salt));
+		
+		
+		return true;
+	}
 }

@@ -88,6 +88,12 @@ HTML;
 									<li><a href="admin/items.php">Add Item</a></li>
 								</ul>
 							</li>
+							<li><a href="admin/users.php">Users</a>
+								<ul class="nav submenu">
+									<li><a href="admin/view-users.php">View Users</a></li>
+									<li><a href="admin/users.php">Add User</a></li>
+								</ul>
+							</li>
 							<li><a href="admin/view-settings.php">Settings</a></li>
 							<hr/>
 							<li><a href="{$sitebase}">View Site</a></li>
