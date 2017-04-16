@@ -36,7 +36,7 @@ $content = <<<CONTENT
 	<div class="container">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<form class="form-signin" action="admin/login.php" method="POST">
+			<form class="form-signin" action="/qr/admin/login.php" method="POST">
 				<h2 class="form-signin-heading">Please sign in</h2>
 				<label for="inputUsername" class="sr-only">Username</label>
 				<input type="username" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>

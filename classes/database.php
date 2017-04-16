@@ -20,6 +20,7 @@ class db {
 		{
 			$dbh = new PDO('mysql:dbname=' . SELF::DB_NAME . ';host=127.0.0.1', SELF::DB_USERNAME, SELF::DB_PASSWORD, array(
 				PDO::ATTR_PERSISTENT	=> true));
+			$dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		} 
 		catch (PDOException $e) 
 		{
@@ -56,7 +57,15 @@ class db {
 		}
 		
 		// Execute our query
-		$statement->execute();
+		try {
+			$statement->execute();
+		}
+		catch (PDOException $e) {
+			handlers::setError($e->getMessage());
+		}
+		catch (Exception $e) {
+			handlers::setError($e->getMessage());
+		}
 		
 		// Return our statement
 		return $statement;

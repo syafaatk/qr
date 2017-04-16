@@ -71,7 +71,8 @@ class security {
 			return false;
 		
 		// Delete all rows that are older than 20 minutes.
-		db::query("DELETE FROM `user_sessions` WHERE `time` < (NOW() - INTERVAL ".settings::getValue('session_timeout_age')." MINUTE)")->fetch(PDO::FETCH_ASSOC);
+		
+		db::query("DELETE FROM `user_sessions` WHERE `time` < (NOW() - INTERVAL ".settings::getValue('session_timeout_age')." MINUTE)")->rowCount();
 		
 		$params = array('session_id' => session_id(), 'salt' => $_SESSION['INT_USER']['salt']);
 		
@@ -84,7 +85,7 @@ class security {
 		else {
 			
 			$params = array('session_id' => session_id(), 'time' => date("Y-m-d H:i:s"));
-			db::query("UPDATE `user_sessions` SET `time`=:time WHERE `id` =:session_id", $params)->fetch(PDO::FETCH_ASSOC);
+			db::query("UPDATE `user_sessions` SET `time`=:time WHERE `id` =:session_id", $params)->rowCount();
 			return true;
 		}
 	}
@@ -108,7 +109,7 @@ class security {
 		$user			= $user->getUser();
 		
 		session_start();
-		$_SESSION['INT_USER']['salt'] = microtime(true);
+		$_SESSION['INT_USER']['salt'] = uniqid();
 		
 		$params = array(
 			'id'	=> session_id(),
@@ -117,8 +118,38 @@ class security {
 		);
 		
 		// Store our session id and salt, and what user it coincides with, in the database.
-		db::query("INSERT INTO `user_sessions` (`id`, `salt`, `user`) VALUES (:id, :salt, :user)", $params)->fetch(PDO::FETCH_ASSOC);
+		db::query("INSERT INTO `user_sessions` (`id`, `salt`, `user`) VALUES (:id, :salt, :user)", $params)->rowCount();
 	
+		return true;
+	}
+	
+	
+	
+	/**
+	 * creates a new user login.
+	 * @param type $username
+	 * @param type $password
+	 * @return boolean
+	 */
+	public static function createLogin($username, $password) {
+		// Get our username and ID from the database (note we are not getting password at this point), I think this may be a redundant step.
+		$count = db::query("SELECT `username`, `id` FROM `users` WHERE `username` = :username", array('username' => $username))->fetch(PDO::FETCH_ASSOC);
+
+		// If no user, we return false.
+		if(!empty($count))
+		{
+			handlers::setError('Username already exists!');	
+			return false;
+		}
+		
+		
+		// Hash our password
+		$salt     = substr(uniqid('', true), -4);
+		$password = hash('sha512', $password . $salt);
+		// Create the username/password
+		db::query("INSERT INTO `users` (`username`, `password`, `salt`) VALUES (:username, :password, :salt)", array('username' => $username, 'password' => $password, 'salt' => $salt));
+		
+		
 		return true;
 	}
 }

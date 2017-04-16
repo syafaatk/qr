@@ -88,7 +88,7 @@ class items {
 			$params['id'] = $this->id;
 			$sql = "UPDATE `items` SET `author`=:author, `title`=:title, `content`=:content, `pat`=:pat, `manual`=:manual, `hackable`=:hackable, `status`=:status WHERE `id`=:id";
 		}
-			
+		
 		if(db::query($sql, $params))
 			handlers::setSuccess('Item saved successfully.');
 		else
